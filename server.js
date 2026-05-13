@@ -6,7 +6,6 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// ⚠️ 必须完全一致
 app.post('/api/contact', (req, res) => {
 
   console.log(req.body);
@@ -17,8 +16,8 @@ app.post('/api/contact', (req, res) => {
 
 });
 
-app.listen(process.env.PORT || 3000);
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log("Server running");
+  console.log("Server running on port " + PORT);
 });
