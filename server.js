@@ -47,7 +47,7 @@ ${message}
     };
 
     // ====== 发送邮件 ======
-    await transporter.sendMail(mailOptions);
+    //await transporter.sendMail(mailOptions);
 
     res.json({
       success: true,
