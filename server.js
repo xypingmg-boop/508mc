@@ -10,6 +10,29 @@ app.get('/', (req, res) => {
   res.send('Backend is running')
 })
 
+// 🔐 登录接口（新增）
+app.post('/api/auth/login', (req, res) => {
+  const { email, password } = req.body;
+
+  console.log('登录请求：', req.body);
+
+  // 👉 临时管理员账号（你可以改）
+  if (email === 'admin@micai.com' && password === '123456') {
+    return res.json({
+      token: 'demo-token-123456',
+      user: {
+        id: '1',
+        email: email,
+        name: 'Admin',
+        role: 'admin'
+      }
+    });
+  }
+
+  return res.status(401).json({
+    error: '账号或密码错误'
+  });
+});
 // 📩 邮件接口
 app.post('/api/contact', async (req, res) => {
 
