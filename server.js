@@ -6,6 +6,9 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.get('/', (req, res) => {
+  res.send('Backend is running')
+})
 
 // 📩 邮件接口
 app.post('/api/contact', async (req, res) => {
