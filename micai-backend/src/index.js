@@ -22,6 +22,34 @@ app.use(express.urlencoded({ extended: true }));
 
 // ── Global rate limit ────────────────────────────
 app.use(rateLimit({
+  // 🔐 登录接口
+app.post('/api/auth/login', (req, res) => {
+
+  const { email, password } = req.body;
+
+  console.log('登录请求:', email);
+
+  // 默认管理员账号
+  if (
+    email === 'admin@micai.com' &&
+    password === '123456'
+  ) {
+    return res.json({
+      token: 'demo-token',
+      user: {
+        id: '1',
+        email,
+        name: 'Admin',
+        role: 'admin'
+      }
+    });
+  }
+
+  return res.status(401).json({
+    error: '账号或密码错误'
+  });
+
+});
   windowMs: 15 * 60 * 1000,  // 15 分钟
   max: 200,
   standardHeaders: true,
