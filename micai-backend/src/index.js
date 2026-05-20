@@ -24,6 +24,40 @@ app.use(express.urlencoded({ extended: true }));
 app.use(rateLimit({
   // 🔐 登录接口
 app.post('/api/auth/login', (req, res) => {
+  // 📦 产品列表接口
+app.get('/api/products', (req, res) => {
+
+  res.json([
+    {
+      id: 1,
+      name: '磁吸翻盖礼盒',
+      category: 'Gift Box',
+      price: '$2.50'
+    },
+    {
+      id: 2,
+      name: '天地盖礼盒',
+      category: 'Packaging',
+      price: '$1.80'
+    }
+  ]);
+
+});
+  // 📩 询盘列表接口
+app.get('/api/inquiries', (req, res) => {
+
+  res.json([
+    {
+      id: 1,
+      company: 'ABC Company',
+      name: 'John',
+      email: 'john@example.com',
+      quantity: '5000',
+      message: 'Need luxury gift boxes'
+    }
+  ]);
+
+});
 
   const { email, password } = req.body;
 
