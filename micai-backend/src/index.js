@@ -7,7 +7,10 @@ const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 
 const app = express();
+const app = express();
 
+// 必须加在所有路由和中间件的最前面，告诉 Express 信任 Railway 的代理
+app.set('trust proxy', 1);
 
 // ── CORS ─────────────────────────────
 app.use(cors({
