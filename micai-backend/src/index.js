@@ -12,6 +12,8 @@ app.set('trust proxy', 1);
 app.use(cors({
   origin: [
     process.env.FRONTEND_URL,
+    'https://mc-pack.vercel.app',
+    'https://514admin.vercel.app',
     'http://localhost:3000',
     'http://127.0.0.1:5500',
   ],
