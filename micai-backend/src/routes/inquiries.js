@@ -11,7 +11,6 @@ const router = express.Router();
 
 // ── POST /api/inquiries  (public — website form) ──
 router.post('/',
-  submitLimit,
   [
     body('name').trim().notEmpty().withMessage('姓名不能为空'),
     body('phone').trim().notEmpty().withMessage('电话不能为空'),
