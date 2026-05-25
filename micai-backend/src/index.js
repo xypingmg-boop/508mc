@@ -31,6 +31,7 @@ app.use(rateLimit({
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many requests' },
+  validate: { xForwardedForHeader: false },
 }));
 
 // ── Routes ───────────────────────────
