@@ -1,7 +1,6 @@
 // src/routes/inquiries.js
 const express  = require('express');
 const { body, validationResult } = require('express-validator');
-const rateLimit = require('express-rate-limit');
 const prisma   = require('../prisma/client');
 const { sendInquiryNotification, sendAutoReply } = require('../middleware/mailer');
 const { requireAuth } = require('../middleware/auth');
@@ -9,12 +8,6 @@ const { requireAuth } = require('../middleware/auth');
 const router = express.Router();
 
 // Stricter rate limit for form submissions
-const submitLimit = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 5,
-  message: { error: '提交过于频繁，请1小时后再试。/ Too many submissions.' },
-  validate: { xForwardedForHeader: false },
-});
 
 // ── POST /api/inquiries  (public — website form) ──
 router.post('/',
