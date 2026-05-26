@@ -13,6 +13,7 @@ const loginLimit = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10,
   message: { error: '登录尝试过多，请15分钟后再试' },
+  validate: { xForwardedForHeader: false }
 });
 
 // ── POST /api/auth/login ──────────────────────────
