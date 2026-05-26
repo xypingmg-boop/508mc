@@ -6,7 +6,7 @@
   "scripts": {
      "start": "node src/index.js"
     "dev": "nodemon src/index.js",
-    "db:migrate": "prisma migrate deploy",
+    "db:migrate": "echo 'skip migrate'"
     "db:generate": "prisma generate",
     "db:studio": "prisma studio",
     "db:seed": "node src/prisma/seed.js"
