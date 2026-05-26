@@ -3,7 +3,7 @@
 builder = "NIXPACKS"
 
 [deploy]
-startCommand = "npm run db:generate && npm run db:migrate && node src/index.js"
+startCommand = "node src/index.js"
 healthcheckPath = "/health"
 healthcheckTimeout = 30
 restartPolicyType = "ON_FAILURE"
