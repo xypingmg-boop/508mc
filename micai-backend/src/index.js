@@ -1,7 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const rateLimit = require('express-rate-limit');
 
 const app = express();
 
@@ -24,15 +23,6 @@ app.use(cors({
 app.use(express.json({ limit: '2mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// ── Rate Limit ──────────────────────
-app.use(rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 200,
-  standardHeaders: true,
-  legacyHeaders: false,
-  message: { error: 'Too many requests' },
-  validate: { xForwardedForHeader: false },
-}));
 
 // ── Routes ───────────────────────────
 app.use('/api/auth',     require('./routes/auth'));
