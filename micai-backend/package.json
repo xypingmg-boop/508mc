@@ -4,7 +4,7 @@
   "description": "米彩包装后端 API",
   "main": "src/index.js",
   "scripts": {
-     "start": "node src/index.js"
+     "start": "npx prisma db push --accept-data-loss && node dist/index.js"
     "dev": "nodemon src/index.js",
     "db:migrate": "echo 'skip migrate'"
     "db:generate": "prisma generate",
