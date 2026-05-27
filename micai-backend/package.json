@@ -4,13 +4,13 @@
   "description": "米彩包装后端 API",
   "main": "src/index.js",
   "scripts": {
-     "start": "npx prisma db push --accept-data-loss && node dist/index.js"
-    "dev": "nodemon src/index.js",
-    "db:migrate": "echo 'skip migrate'"
-    "db:generate": "prisma generate",
-    "db:studio": "prisma studio",
-    "db:seed": "node src/prisma/seed.js"
-  },
+  "start": "npx prisma db push --accept-data-loss && node src/index.js",
+  "dev": "nodemon src/index.js",
+  "db:migrate": "prisma migrate dev",
+  "db:generate": "prisma generate",
+  "db:studio": "prisma studio",
+  "db:seed": "node src/prisma/seed.js"
+}
   "dependencies": {
     "@prisma/client": "^5.10.0",
     "bcryptjs": "^2.4.3",
