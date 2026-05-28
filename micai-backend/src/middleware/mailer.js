@@ -1,22 +1,9 @@
 // src/middleware/mailer.js
-const nodemailer = require('nodemailer');
+const { Resend } = require('resend');
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-const transporter = nodemailer.createTransport({
-  host:   process.env.MAIL_HOST,
-  port:   Number(process.env.MAIL_PORT),
-  secure: process.env.MAIL_SECURE === 'true',
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASS,
-  },
-});
-
-/**
- * Send inquiry notification email to sales team.
- */
 async function sendInquiryNotification(inquiry) {
   const subject = `【新询盘】${inquiry.name} — ${inquiry.productType || '未指定产品'}`;
-
   const html = `
     <div style="font-family:sans-serif;max-width:600px;margin:0 auto">
       <div style="background:#1A1208;padding:24px 32px">
@@ -38,18 +25,14 @@ async function sendInquiryNotification(inquiry) {
       </div>
     </div>
   `;
-
-  await transporter.sendMail({
-    from:    process.env.MAIL_FROM,
-    to:      process.env.MAIL_TO_SALES,
+  await resend.emails.send({
+    from: process.env.MAIL_FROM,
+    to:   process.env.MAIL_TO_SALES,
     subject,
     html,
   });
 }
 
-/**
- * Send auto-reply to customer.
- */
 async function sendAutoReply(inquiry) {
   const subjects = {
     zh: '感谢您的询盘 — 米彩包装',
@@ -57,16 +40,13 @@ async function sendAutoReply(inquiry) {
     de: 'Vielen Dank für Ihre Anfrage — MICAI Packaging',
   };
   const greetings = {
-    zh: `尊敬的 ${inquiry.name}，\n\n感谢您联系米彩包装！我们已收到您的询盘，业务顾问将在 24 小时内与您联系。\n\n如有紧急需求，请直接联系我们：\n电话：+86 0577-XXXX XXXX\n邮箱：sales@micai-packaging.com\n\n米彩包装团队`,
+    zh: `尊敬的 ${inquiry.name}，\n\n感谢您联系米彩包装！我们已收到您的询盘，业务顾问将在 24 小时内与您联系。\n\n如有紧急需求，请直接联系我们：\n邮箱：sales@micai-packaging.com\n\n米彩包装团队`,
     en: `Dear ${inquiry.name},\n\nThank you for contacting MICAI Packaging! We have received your enquiry and a consultant will reach out within 24 hours.\n\nFor urgent matters: sales@micai-packaging.com\n\nBest regards,\nMICAI Packaging Team`,
     de: `Sehr geehrte/r ${inquiry.name},\n\nVielen Dank für Ihre Anfrage bei MICAI Packaging! Wir haben Ihre Anfrage erhalten und werden uns innerhalb von 24 Stunden bei Ihnen melden.\n\nBei dringenden Fragen: sales@micai-packaging.com\n\nMit freundlichen Grüßen,\nMICAI Packaging Team`,
   };
-
   const lang = inquiry.lang in subjects ? inquiry.lang : 'zh';
-
-  if (!inquiry.email) return; // no email to reply to
-
-  await transporter.sendMail({
+  if (!inquiry.email) return;
+  await resend.emails.send({
     from:    process.env.MAIL_FROM,
     to:      inquiry.email,
     subject: subjects[lang],
