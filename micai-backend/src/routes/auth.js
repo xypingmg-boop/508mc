@@ -118,4 +118,25 @@ router.patch('/users/:id', requireAuth, requireSuperAdmin, async (req, res) => {
   res.json(user);
 });
 
+// ── PATCH /api/auth/profile ────────────────
+router.patch("/profile",
+  requireAuth,
+  [
+    body("name").optional().trim().notEmpty(),
+    body("email").optional().isEmail(),
+  ],
+  async (req, res) => {
+    const { name, email } = req.body;
+    const data = {};
+    if (name) data.name = name;
+    if (email) data.email = email;
+    const user = await prisma.user.update({
+      where: { id: req.user.id },
+      data,
+      select: { id: true, email: true, name: true, role: true },
+    });
+    res.json(user);
+  }
+);
+
 module.exports = router;
