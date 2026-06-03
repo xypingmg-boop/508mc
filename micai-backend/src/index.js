@@ -31,6 +31,7 @@ app.use('/api/products', require('./routes/products'));
 app.use('/api/inquiries',require('./routes/inquiries'));
 app.use('/api/contents', require('./routes/contents'));
 app.use('/api/settings', require('./routes/settings'));
+app.use('/api/upload',   require('./routes/upload'));
 
 // ── Health Check ────────────────────
 app.get('/', (_, res) => res.send('Backend is running'));
