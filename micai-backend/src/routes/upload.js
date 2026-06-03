@@ -24,7 +24,7 @@ const storage = new CloudinaryStorage({
 const upload = multer({ storage });
 
 // POST /api/upload
-router.post('/', requireAuth, upload.single('image'), (req, res) => {
+router.post('/', requireAuth, upload.single('file'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: '没有收到图片' });
   res.json({ url: req.file.path });
 });
