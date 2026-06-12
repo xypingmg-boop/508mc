@@ -27,7 +27,7 @@ router.post('/', requireAuth, upload.single('file'), async (req, res) => {
   try {
     const result = await new Promise((resolve, reject) => {
       const stream = cloudinary.uploader.upload_stream(
-        { folder: 'micai-products', allowed_formats: ['jpg', 'jpeg', 'png', 'webp'] },
+        { folder: 'micai-products', resource_type: 'auto', allowed_formats: ['jpg', 'jpeg', 'png', 'webp', 'mp4', 'mov', 'avi', 'webm'] },
         (error, result) => {
           if (error) reject(error);
           else resolve(result);
