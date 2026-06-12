@@ -30,7 +30,7 @@ router.get('/:slug', async (req, res) => {
 });
 
 router.post('/', requireAuth, async (req, res) => {
-  const { icon, imageUrl, images, price, originalPrice, sku, stock, sort, visible, translations, variants } = req.body;
+  const { icon, imageUrl, images, price, originalPrice, sku, stock, sort, visible, translations, variants, categoryName } = req.body;
   const zhName = translations?.find(t => t.lang === 'zh')?.name || 'product';
   const baseSlug = slugify(zhName, { lower: true, strict: true }) || Date.now().toString();
   let slug = baseSlug;
@@ -44,6 +44,7 @@ router.post('/', requireAuth, async (req, res) => {
       stock: stock ?? 0,
       sort: sort ?? 0,
       visible: visible ?? true,
+      categoryName: categoryName ?? null,
       translations: {
         create: (translations || []).map(t => ({
           lang: t.lang,
@@ -69,7 +70,7 @@ router.post('/', requireAuth, async (req, res) => {
 });
 
 router.put('/:id', requireAuth, async (req, res) => {
-  const { icon, imageUrl, images, price, originalPrice, sku, stock, sort, visible, translations, variants } = req.body;
+  const { icon, imageUrl, images, price, originalPrice, sku, stock, sort, visible, translations, variants, categoryName } = req.body;
   if (translations) {
     for (const t of translations) {
       await prisma.productTranslation.upsert({
@@ -96,7 +97,7 @@ router.put('/:id', requireAuth, async (req, res) => {
   }
   const product = await prisma.product.update({
     where: { id: req.params.id },
-    data:  { icon, imageUrl, images: images || [], price, originalPrice, sku, stock: stock ?? 0, sort, visible },
+    data:  { icon, imageUrl, images: images || [], price, originalPrice, sku, stock: stock ?? 0, sort, visible, ...(categoryName !== undefined && { categoryName }) },
     include: INCLUDE,
   });
   res.json(product);
