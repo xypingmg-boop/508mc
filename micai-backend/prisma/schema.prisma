@@ -34,6 +34,7 @@ model Product {
   icon          String?
   imageUrl      String?
   images        String[]
+  categoryName  Json?
   price         String?
   originalPrice String?
   sku           String?
